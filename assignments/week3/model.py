@@ -24,9 +24,9 @@ class MLP(torch.nn.Module):
             initializer: The initializer to use for the weights.
         """
         super(MLP, self).__init__()
-        self.fc1 = torch.nn.Linear(input_size, 512)
-        self.fc2 = torch.nn.Linear(512, 512)
-        self.fc3 = torch.nn.Linear(512, num_classes)
+        self.fc1 = torch.nn.Linear(input_size, 128)
+        self.fc2 = torch.nn.Linear(128, 128)
+        self.fc3 = torch.nn.Linear(128, num_classes)
         self.activation = activation
         self.initializer = initializer
         self.hidden_count = hidden_count
