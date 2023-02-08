@@ -24,9 +24,9 @@ class MLP(torch.nn.Module):
             initializer: The initializer to use for the weights.
         """
         super(MLP, self).__init__()
-        self.fc1 = torch.nn.Linear(input_size, 128)
-        self.fc2 = torch.nn.Linear(128, 128)
-        self.fc3 = torch.nn.Linear(128, num_classes)
+        self.fc1 = torch.nn.Linear(input_size, hidden_size)
+        self.fc2 = torch.nn.Linear(hidden_size, hidden_size)
+        self.fc3 = torch.nn.Linear(hidden_size, num_classes)
         self.activation = activation
         self.initializer = initializer
         self.hidden_count = hidden_count
@@ -44,7 +44,7 @@ class MLP(torch.nn.Module):
             The output of the network.
         """
         # x = self.initializer(x)
-        x = x.view(-1, 28 * 28)
+        # x = x.view(-1, 28 * 28)
         x = F.relu(self.fc1(x))
         x = self.droput(x)
         for i in range(self.hidden_count):
