@@ -23,6 +23,3 @@ def create_model(input_dim: int, output_dim: int) -> MLP:
         torch.nn.functional.relu,
         torch.nn.init.kaiming_uniform_,
     )
-
-
-# .calculate_gain('leaky_relu', 0.2)

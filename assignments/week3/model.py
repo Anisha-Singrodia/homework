@@ -4,6 +4,12 @@ from typing import Callable
 
 
 class MLP(torch.nn.Module):
+    """This method generates a multi layer perceptron model
+
+    Args:
+        torch (nn.module): extending nn module class
+    """
+
     def __init__(
         self,
         input_size: int,
@@ -33,15 +39,15 @@ class MLP(torch.nn.Module):
         # dropout prevents overfitting of data
         self.droput = torch.nn.Dropout(0.2)
 
-    def forward(self, x):
+    def forward(self, x: torch.tensor) -> torch.tensor:
         """
         Forward pass of the network.
 
         Arguments:
-            x: The input data.
+            x(torch.tensor): The input data.
 
         Returns:
-            The output of the network.
+            torch.tensor: The output of the network.
         """
         # x = self.initializer(x)
         # x = x.view(-1, 28 * 28)
