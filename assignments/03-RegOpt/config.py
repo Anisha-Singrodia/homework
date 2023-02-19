@@ -2,11 +2,11 @@ from typing import Callable
 import torch
 import torch.optim
 import torch.nn as nn
-from torchvision.transforms import Compose, Normalize, ToTensor
+from torchvision.transforms import Compose, Normalize, ToTensor, RandomGrayscale
 
 
 class CONFIG:
-    batch_size = 32
+    batch_size = 64
     num_epochs = 5
     initial_learning_rate = 0.001
     initial_weight_decay = 0
@@ -31,5 +31,9 @@ class CONFIG:
     )
 
     transforms = Compose(
-        [ToTensor(), Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616))]
+        [
+            ToTensor(),
+            Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616)),
+            RandomGrayscale(),
+        ]
     )
