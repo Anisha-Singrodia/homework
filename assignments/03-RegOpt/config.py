@@ -31,7 +31,5 @@ class CONFIG:
     )
 
     transforms = Compose(
-        [
-            ToTensor(),
-        ]
+        [ToTensor(), Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616))]
     )
