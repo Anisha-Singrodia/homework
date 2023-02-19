@@ -3,6 +3,7 @@ import torch
 import torch.optim
 import torch.nn as nn
 from torchvision.transforms import Compose, Normalize, ToTensor
+from model import MiniCNN
 
 
 class CONFIG:
@@ -15,6 +16,10 @@ class CONFIG:
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
+        "T_max": batch_size + num_epochs,
+        "eta_min": 0,
+        "last_epoch": -1,
+        "verbose": False,
     }
 
     optimizer_factory: Callable[
