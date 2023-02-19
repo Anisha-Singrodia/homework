@@ -6,7 +6,6 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 
 
 class CONFIG:
-
     batch_size = 64
     num_epochs = 2
     initial_learning_rate = 0.001
@@ -29,4 +28,8 @@ class CONFIG:
         weight_decay=CONFIG.initial_weight_decay,
     )
 
-    transforms = Compose([ToTensor(),])
+    transforms = Compose(
+        [
+            ToTensor(),
+        ]
+    )
