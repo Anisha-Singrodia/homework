@@ -23,7 +23,7 @@ class CONFIG:
         # "last_epoch": -1,
         # "verbose": False,
         "base_lr": initial_learning_rate,
-        "max_lr": 0.002,
+        "max_lr": 0.003,
     }
 
     optimizer_factory: Callable[
@@ -38,8 +38,8 @@ class CONFIG:
     transforms = Compose(
         [
             ToTensor(),
-            Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616)),
-            # Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
+            # Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616)),
+            Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
             # Resize((32, 32)), # Resize the image in a 32X32 shape
             # RandomRotation(10), # Randomly rotate some images by 20 degrees
             # RandomHorizontalFlip(0.1), # Randomly horizontal flip the images
