@@ -7,6 +7,7 @@
         }
     ],
     "sources": [
-        "https://d2l.ai/chapter_optimization/lr-scheduler.html"
+        "https://d2l.ai/chapter_optimization/lr-scheduler.html",
+        "https://pytorch.org/docs/stable/_modules/torch/optim/lr_scheduler"
     ]
 }
