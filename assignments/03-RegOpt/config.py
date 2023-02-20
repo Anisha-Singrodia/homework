@@ -2,23 +2,25 @@ from typing import Callable
 import torch
 import torch.optim
 import torch.nn as nn
-from torchvision.transforms import Compose, Normalize, ToTensor, RandomRotation
+from torchvision.transforms import Compose, Normalize, ToTensor
+
+# , RandomRotation,
 
 # Resize, , RandomHorizontalFlip, ColorJitter, RandomAdjustSharpness, RandomErasing
 
 
 class CONFIG:
-    batch_size = 64
+    batch_size = 128
     num_epochs = 10
-    initial_learning_rate = 0.0025
+    initial_learning_rate = 0.005
     initial_weight_decay = 1e-5
 
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
         # "T_max": (batch_size + num_epochs),
-        "T_0": 2,
-        "T_mult": 1,
+        "T_0": 1,
+        "T_mult": 2,
         "eta_min": 0,
         "last_epoch": -1,
         "verbose": False,
@@ -35,9 +37,9 @@ class CONFIG:
     transforms = Compose(
         [
             ToTensor(),
-            # Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616)),
+            Normalize((0.4915, 0.4823, 0.4468), (0.2470, 0.2435, 0.2616)),
             # Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5)),
-            Normalize(mean=[0.485, 0.456, 0.4], std=[0.229, 0.224, 0.2]),
+            # Normalize(mean=[0.485, 0.456, 0.4], std=[0.229, 0.224, 0.2]),
             # Resize((32, 32)), # Resize the image in a 32X32 shape
             # RandomRotation(10), # Randomly rotate some images by 20 degrees
             # RandomHorizontalFlip(0.1), # Randomly horizontal flip the images
