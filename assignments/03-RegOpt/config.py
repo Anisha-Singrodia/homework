@@ -21,7 +21,7 @@ class CONFIG:
         # "T_max": (batch_size + num_epochs),
         "T_0": 1,
         "T_mult": 2,
-        "eta_min": 0,
+        "eta_min": 1e-4,
         "last_epoch": -1,
         "verbose": False,
     }

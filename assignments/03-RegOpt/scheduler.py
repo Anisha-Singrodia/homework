@@ -11,9 +11,7 @@ class CustomLRScheduler(_LRScheduler):
         _LRScheduler (_type_): Custom LR Scheduler
     """
 
-    def __init__(
-        self, optimizer, T_0, T_mult, eta_min=0.5, last_epoch=-1, verbose=False
-    ):
+    def __init__(self, optimizer, T_0, T_mult, eta_min=0, last_epoch=-1, verbose=False):
         """
         Create a new scheduler.
         Note to students: You can change the arguments to this constructor,
