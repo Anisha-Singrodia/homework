@@ -8,10 +8,10 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 
 
 class CONFIG:
-    batch_size = 64
+    batch_size = 84
     num_epochs = 5
-    initial_learning_rate = 0.001
-    initial_weight_decay = 0
+    initial_learning_rate = 0.004
+    initial_weight_decay = 0.0001
 
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
@@ -22,16 +22,17 @@ class CONFIG:
         # "eta_min": 1e-4,
         # "last_epoch": -1,
         # "verbose": False,
-        "base_lr": 0.001,
-        "max_lr": 0.01,
+        "base_lr": initial_learning_rate,
+        "max_lr": 0.002,
     }
 
     optimizer_factory: Callable[
         [nn.Module], torch.optim.Optimizer
-    ] = lambda model: torch.optim.Adam(
+    ] = lambda model: torch.optim.RAdam(
         model.parameters(),
         lr=CONFIG.initial_learning_rate,
-        weight_decay=CONFIG.initial_weight_decay,
+        # weight_decay=CONFIG.initial_weight_decay,
+        # momentum=0.9
     )
 
     transforms = Compose(
