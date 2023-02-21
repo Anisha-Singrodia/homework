@@ -70,7 +70,8 @@ class CustomLRScheduler(_LRScheduler):
             / (1 + math.cos(math.pi * (self.last_epoch - 1) / self.T_max))
             * (group["lr"] - self.eta_min)
             + self.eta_min
-            for group in self.optimizer.param_groups]
+            for group in self.optimizer.param_groups
+        ]
 
     #     if not self._get_lr_called_within_step:
     #         warnings.warn(
