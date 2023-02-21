@@ -18,7 +18,7 @@ class CONFIG:
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
-        "T_max": (batch_size * num_epochs),
+        "T_max": (batch_size * 10),
         # "T_0": 8,
         # "T_mult": 1,
         "eta_min": 1e-4,
