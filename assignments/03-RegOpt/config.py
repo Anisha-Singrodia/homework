@@ -11,18 +11,21 @@ from torchvision.transforms import Compose, Normalize, ToTensor
 
 class CONFIG:
     batch_size = 128
-    num_epochs = 8
+    num_epochs = 10
     initial_learning_rate = 0.005
     initial_weight_decay = 0
 
     lrs_kwargs = {
         # You can pass arguments to the learning rate scheduler
         # constructor here.
-        "T_0": 3,
-        "T_mult": 3,
+        "T_max": batch_size * 10,
+        # "T_0": 8,
+        # "T_mult": 1,
         "eta_min": 1e-4,
-        "last_epoch": -1,
-        "verbose": False,
+        # "last_epoch": -1,
+        # "verbose": False,
+        # "base_lr": initial_learning_rate,
+        # "max_lr": 0.004,
     }
 
     optimizer_factory: Callable[
