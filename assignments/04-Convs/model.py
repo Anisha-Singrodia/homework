@@ -25,9 +25,9 @@ class Model(nn.Module):
         # Input = 64 x 10 x 10, Output = 64 x 5 x 5 = 1600
         self.max_pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
 
-        self.fc1 = nn.Linear(6272, 128)
-        self.relu1 = nn.ReLU()
-        self.fc2 = nn.Linear(128, num_classes)
+        # self.fc1 = nn.Linear(6272, 128)
+        # self.relu1 = nn.ReLU()
+        self.fc2 = nn.Linear(6272, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -43,7 +43,7 @@ class Model(nn.Module):
 
         out = out.reshape(out.size(0), -1)
 
-        out = self.fc1(out)
-        out = self.relu1(out)
+        # out = self.fc1(out)
+        # out = self.relu1(out)
         out = self.fc2(out)
         return out
