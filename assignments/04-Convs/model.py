@@ -14,7 +14,7 @@ class Model(nn.Module):
             in_channels=num_channels, out_channels=32, kernel_size=3
         )
         # Input = 32 x 30 x 30, Output = 32 x 28 x 28
-        self.conv_layer2 = nn.Conv2d(in_channels=32, out_channels=32, kernel_size=3)
+        self.conv_layer2 = nn.Conv2d(in_channels=32, out_channels=16, kernel_size=3)
         # Input = 32 x 28 x 28, Output = 32 x 14 x 14 =
         self.max_pool1 = nn.MaxPool2d(kernel_size=2, stride=2)
 
@@ -27,7 +27,7 @@ class Model(nn.Module):
 
         # self.fc1 = nn.Linear(6272, 128)
         # self.relu1 = nn.ReLU()
-        self.fc2 = nn.Linear(6272, num_classes)
+        self.fc2 = nn.Linear(3136, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
@@ -45,5 +45,6 @@ class Model(nn.Module):
 
         # out = self.fc1(out)
         # out = self.relu1(out)
+        # out = nn.Dropout(0.25)(out)
         out = self.fc2(out)
         return out
