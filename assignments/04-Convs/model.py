@@ -31,7 +31,6 @@ class Model(nn.Module):
     """
 
     def __init__(self, num_channels: int, num_classes: int) -> None:
-
         super().__init__()
         self.model = torch.nn.Sequential(
             # Input = 3 x 32 x 32, Output = 32 x 32 x 32
