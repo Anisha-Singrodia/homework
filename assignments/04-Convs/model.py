@@ -47,14 +47,14 @@ class Model(nn.Module):
 
         self.conv = nn.Sequential(
             ConvBlock(num_channels, out_channels=64),
-            ConvBlock(in_channels=64, out_channels=128),
+            # ConvBlock(in_channels=64, out_channels=128),
             # ConvBlock(in_channels=128, out_channels=256),
             # ConvBlock(in_channels=256, out_channels=512),
         )
 
         self.fc = nn.Sequential(
             nn.Dropout(0.2),
-            nn.Linear(128, 128),
+            nn.Linear(64, 128),
             nn.PReLU(),
             nn.BatchNorm1d(128),
             nn.Dropout(0.1),
