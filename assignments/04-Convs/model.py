@@ -45,6 +45,6 @@ class Model(nn.Module):
 
         # out = self.fc1(out)
         # out = self.relu1(out)
-        # out = nn.Dropout(0.25)(out)
+        out = nn.Dropout(0.5)(out)
         out = self.fc2(out)
         return out
