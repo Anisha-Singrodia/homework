@@ -18,17 +18,6 @@ class ConvBlock(nn.Module):
             nn.ReLU(),
         )
 
-        self._init_weights()
-
-    def _init_weights(self):
-        for m in self.modules():
-            if isinstance(m, nn.Conv2d):
-                nn.init.kaiming_normal_(m.weight)
-                if m.bias is not None:
-                    nn.init.zeros_(m.bias)
-            elif isinstance(m, nn.BatchNorm2d):
-                nn.init.constant_(m.weight, 1)
-                nn.init.zeros_(m.bias)
 
     def forward(self, x):
         x = self.conv1(x)
@@ -57,7 +46,7 @@ class Model(nn.Module):
             # nn.Linear(64, 64),
             nn.ReLU(),
             nn.BatchNorm1d(32),
-            nn.Dropout(0.25),
+            nn.Dropout(0.2),
             nn.Linear(32, num_classes),
         )
 
