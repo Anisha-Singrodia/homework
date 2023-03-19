@@ -11,7 +11,7 @@ class Model(nn.Module):
         super().__init__()
         # Input = 3 x 32 x 32, Output = 32 x 30 x 30
         self.conv_layer1 = nn.Conv2d(
-            in_channels=num_channels, out_channels=16, kernel_size=3, stride=2
+            in_channels=num_channels, out_channels=32, kernel_size=3, stride=2
         )
         # Input = 32 x 30 x 30, Output = 32 x 28 x 28
         self.conv_layer2 = nn.Conv2d(in_channels=16, out_channels=32, kernel_size=3)
@@ -23,15 +23,18 @@ class Model(nn.Module):
         self.conv_layer4 = nn.Conv2d(in_channels=64, out_channels=64, kernel_size=3)
         # Input = 64 x 10 x 10, Output = 64 x 5 x 5 = 1600
         self.max_pool2 = nn.MaxPool2d(kernel_size=2, stride=2)
-        self.fc1 = nn.Linear(784, 128)
+        self.fc1 = nn.Linear(1568, 128)
         self.relu1 = nn.ReLU()
         self.fc2 = nn.Linear(128, num_classes)
+
+        self.bn = nn.BatchNorm2d(16)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """
         forward method
         """
         out = self.conv_layer1(x)
+
         # out = self.relu1(out)
         # out = self.conv_layer2(out)
         out = self.max_pool1(out)
