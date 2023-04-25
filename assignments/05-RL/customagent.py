@@ -141,8 +141,8 @@ class QNetwork(nn.Module):
     def __init__(self, state_size, action_size):
         super(QNetwork, self).__init__()
         self.seed = torch.manual_seed(10)
-        self.fc1 = nn.Linear(state_size, 64)
-        self.fc2 = nn.Linear(64, 64)
+        self.fc1 = nn.Linear(state_size, 32)
+        self.fc2 = nn.Linear(32, 64)
         self.fc3 = nn.Linear(64, action_size)
 
     def forward(self, state):
