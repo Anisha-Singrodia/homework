@@ -4,9 +4,14 @@
         {
             "name": "Change this to your name",
             "pennkey": "MyPennKey"
+        },
+        {
+            "name": "Anson Huang",
+            "pennkey": "rhuang99"
         }
     ],
     "sources": [
-        "Don't forget to list your sources/attribution here!"
+        "https://gymnasium.farama.org/environments/box2d/lunar_lander/"
+
     ]
 }
