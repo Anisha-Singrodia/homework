@@ -67,7 +67,7 @@ class Agent:
         # Epsilon-greedy action selection
         if random.random() > self.epsilon:
             state = torch.from_numpy(observation).float().unsqueeze(0).to(device)
-            # set the network into evaluation mode 
+            # set the network into evaluation mode
             self.qnetwork_local.eval()
             with torch.no_grad():
                 action_values = self.qnetwork_local(state)
@@ -107,8 +107,8 @@ class Agent:
 
     def learn_after_step(self, experiences):
         """
-        Learn from experience by training the q_network 
-        
+        Learn from experience by training the q_network
+
         Parameters
         ----------
         experiences (array_like): List of experiences sampled from agent's memory
@@ -121,11 +121,11 @@ class Agent:
         # unsqueeze operation --> np.reshape
         # Here, we make it from torch.Size([64]) -> torch.Size([64, 1])
         max_action_values = action_values.max(1)[0].unsqueeze(1)
-        
+
         # If done just use reward, else update Q_target with discounted action values
         Q_target = rewards + (GAMMA * max_action_values * (1 - dones))
         Q_expected = self.qnetwork_local(states).gather(1, actions)
-        
+
         # Calculate loss
         loss = F.mse_loss(Q_expected, Q_target)
         self.optimizer.zero_grad()
@@ -133,28 +133,32 @@ class Agent:
         loss.backward()
         # update weights
         self.optimizer.step()
-        
+
         # Update fixed weights
         self.update_fixed_network(self.qnetwork_local, self.qnetwork_target)
 
     def update_fixed_network(self, q_network, fixed_network):
         """
         Update fixed network by copying weights from Q network using TAU param
-        
+
         Parameters
         ----------
         q_network (PyTorch model): Q network
         fixed_network (PyTorch model): Fixed target network
         """
-        for source_parameters, target_parameters in zip(q_network.parameters(), fixed_network.parameters()):
-            target_parameters.data.copy_(TAU * source_parameters.data + (1.0 - TAU) * target_parameters.data)
+        for source_parameters, target_parameters in zip(
+            q_network.parameters(), fixed_network.parameters()
+        ):
+            target_parameters.data.copy_(
+                TAU * source_parameters.data + (1.0 - TAU) * target_parameters.data
+            )
 
 
 class QNetwork(nn.Module):
     def __init__(self, state_size, action_size, seed):
         """
         Build a fully connected neural network
-        
+
         Parameters
         ----------
         state_size (int): State dimension
@@ -165,21 +169,22 @@ class QNetwork(nn.Module):
         self.seed = torch.manual_seed(seed)
         self.fc1 = nn.Linear(state_size, 32)
         self.fc2 = nn.Linear(32, 64)
-        self.fc3 = nn.Linear(64, action_size)  
-        
+        self.fc3 = nn.Linear(64, action_size)
+
     def forward(self, x):
         """Forward pass"""
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
         x = self.fc3(x)
-        
-        return x        
+
+        return x
+
 
 class ReplayBuffer:
     def __init__(self, buffer_size, batch_size, seed):
         """
         Replay memory allow agent to record experiences and learn from them
-        
+
         Parametes
         ---------
         buffer_size (int): maximum size of internal memory
@@ -189,28 +194,91 @@ class ReplayBuffer:
         self.batch_size = batch_size
         self.seed = random.seed(seed)
         self.memory = deque(maxlen=buffer_size)
-        self.experience = namedtuple("Experience", field_names=["state", "action", "reward", "next_state", "done"])
-    
+        self.experience = namedtuple(
+            "Experience",
+            field_names=["state", "action", "reward", "next_state", "done"],
+        )
+
     def add(self, state, action, reward, next_state, done):
         """Add experience"""
         experience = self.experience(state, action, reward, next_state, done)
         self.memory.append(experience)
-                
+
     def sample(self):
-        """ 
-        Sample randomly and return (state, action, reward, next_state, done) tuple as torch tensors 
+        """
+        Sample randomly and return (state, action, reward, next_state, done) tuple as torch tensors
         """
         experiences = random.sample(self.memory, k=self.batch_size)
-        
+
         # Convert to torch tensors
-        states = torch.from_numpy(np.vstack([experience.state for experience in experiences if experience is not None])).float().to(device)
-        actions = torch.from_numpy(np.vstack([experience.action for experience in experiences if experience is not None])).long().to(device)        
-        rewards = torch.from_numpy(np.vstack([experience.reward for experience in experiences if experience is not None])).float().to(device)        
-        next_states = torch.from_numpy(np.vstack([experience.next_state for experience in experiences if experience is not None])).float().to(device)  
+        states = (
+            torch.from_numpy(
+                np.vstack(
+                    [
+                        experience.state
+                        for experience in experiences
+                        if experience is not None
+                    ]
+                )
+            )
+            .float()
+            .to(device)
+        )
+        actions = (
+            torch.from_numpy(
+                np.vstack(
+                    [
+                        experience.action
+                        for experience in experiences
+                        if experience is not None
+                    ]
+                )
+            )
+            .long()
+            .to(device)
+        )
+        rewards = (
+            torch.from_numpy(
+                np.vstack(
+                    [
+                        experience.reward
+                        for experience in experiences
+                        if experience is not None
+                    ]
+                )
+            )
+            .float()
+            .to(device)
+        )
+        next_states = (
+            torch.from_numpy(
+                np.vstack(
+                    [
+                        experience.next_state
+                        for experience in experiences
+                        if experience is not None
+                    ]
+                )
+            )
+            .float()
+            .to(device)
+        )
         # Convert done from boolean to int
-        dones = torch.from_numpy(np.vstack([experience.done for experience in experiences if experience is not None]).astype(np.uint8)).float().to(device)        
-        
+        dones = (
+            torch.from_numpy(
+                np.vstack(
+                    [
+                        experience.done
+                        for experience in experiences
+                        if experience is not None
+                    ]
+                ).astype(np.uint8)
+            )
+            .float()
+            .to(device)
+        )
+
         return (states, actions, rewards, next_states, dones)
-        
+
     def __len__(self):
         return len(self.memory)

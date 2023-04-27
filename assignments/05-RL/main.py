@@ -6,12 +6,13 @@
 import gymnasium as gym
 from customagent import Agent
 import matplotlib.pyplot as plt
+
 # %matplotlib inline
 
 SHOW_ANIMATIONS = True
 
 env = gym.make("LunarLander-v2", render_mode="human" if SHOW_ANIMATIONS else "none")
-env = gym.make('LunarLander-v2')
+env = gym.make("LunarLander-v2")
 observation, info = env.reset(seed=42)
 
 agent = Agent(
@@ -22,8 +23,8 @@ agent = Agent(
 total_reward = 0
 last_n_rewards = []
 scores = []
-#100000
-max_episodes = 5*100000
+# 100000
+max_episodes = 5 * 100000
 for _ in range(max_episodes):
     action = agent.act(observation)
     observation, reward, terminated, truncated, info = env.step(action)
@@ -51,10 +52,10 @@ for _ in range(max_episodes):
     scores.append(total_reward)
 env.close()
 
-plt.figure(figsize=(8,6))
+plt.figure(figsize=(8, 6))
 plt.plot(range(max_episodes), scores)
-plt.title('Performance of Random Agent')
-plt.xlabel('Episodes')
-plt.ylabel('Score')
+plt.title("Performance of Random Agent")
+plt.xlabel("Episodes")
+plt.ylabel("Score")
 plt.show()
 exit()
