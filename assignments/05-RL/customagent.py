@@ -14,10 +14,10 @@ from collections import deque, namedtuple
 device = "cpu"
 # BUFFER_SIZE = int(1e5)  # replay buffer size
 BUFFER_SIZE = 5000
-BATCH_SIZE = 64  # minibatch size
+# BATCH_SIZE = 64  # minibatch size
 GAMMA = 0.99  # discount factor
 TAU = 1e-3  # for soft update of target parameters
-LR = 3e-4  # learning rate
+LR = 5e-4  # learning rate
 # [226932, 63751, 134, 75381, 59013, 46209, 295641, 457141, 168622]
 # [171192, 219784, 124087, 114731, 160432, 47441, 293429, 309208]
 UPDATE_EVERY = 4  # how often to update the network
@@ -35,7 +35,10 @@ class Agent:
     """
 
     def __init__(
-        self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box
+        self,
+        action_space: gym.spaces.Discrete,
+        observation_space: gym.spaces.Box,
+        batch,
     ):
         # Define the hyperparameters
         self.epsilon = 1  # Exploration rate
@@ -57,6 +60,8 @@ class Agent:
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=LR)
 
         # Replay memory
+        BATCH_SIZE = 32
+        self.batch_size = 32
         self.memory = ReplayBuffer(BUFFER_SIZE, BATCH_SIZE, seed)
         # Initialize time step (for updating every UPDATE_EVERY steps)
         self.timestep = 0
@@ -103,7 +108,7 @@ class Agent:
         self.memory.add(state, action, reward, next_state, done)
         self.timestep += 1
         if self.timestep % UPDATE_EVERY == 0:
-            if len(self.memory) > BATCH_SIZE:
+            if len(self.memory) > self.batch_size:
                 sampled_experiences = self.memory.sample()
                 self.learn_after_step(sampled_experiences)
 
@@ -170,9 +175,9 @@ class QNetwork(nn.Module):
         """
         super(QNetwork, self).__init__()
         self.seed = torch.manual_seed(seed)
-        self.fc1 = nn.Linear(state_size, 128)
-        self.fc2 = nn.Linear(128, 128)
-        self.fc3 = nn.Linear(128, action_size)
+        self.fc1 = nn.Linear(state_size, 32)
+        self.fc2 = nn.Linear(32, 64)
+        self.fc3 = nn.Linear(64, action_size)
 
     def forward(self, x):
         """Forward pass"""
