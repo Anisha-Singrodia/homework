@@ -46,9 +46,8 @@ for i in range(1):
             )
             if avg > 0:
                 print("🎉 Nice work! You're ready to submit the leaderboard! 🎉")
-                # print(epi)
                 steps.append(epi)
-                break
+                # break
             total_reward = 0
         scores.append(total_reward)
         if epi == max_episodes - 1:
