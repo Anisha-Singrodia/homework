@@ -13,7 +13,7 @@ from collections import deque, namedtuple
 
 device = "cpu"
 # BUFFER_SIZE = int(1e5)  # replay buffer size
-BUFFER_SIZE = 5000
+BUFFER_SIZE = 3000
 BATCH_SIZE = 64  # minibatch size
 GAMMA = 0.99  # discount factor
 TAU = 1e-3  # for soft update of target parameters
@@ -39,8 +39,8 @@ class Agent:
     ):
         # Define the hyperparameters
         self.epsilon = 1  # Exploration rate
-        self.epsilon_decay = 0.995  # Decay rate of exploration rate
-        self.epsilon_min = 0.05  # Minimum exploration rate
+        self.epsilon_decay = 0.999  # Decay rate of exploration rate
+        self.epsilon_min = 0.01  # Minimum exploration rate
         # [60414, 53049, 294776, 68983, 129605, 115574, 62304, 75892, 55894]
         # self.epsilon_min = 0.05  # Minimum exploration rate
 
@@ -168,8 +168,8 @@ class QNetwork(nn.Module):
         """
         super(QNetwork, self).__init__()
         self.seed = torch.manual_seed(seed)
-        self.fc1 = nn.Linear(state_size, 64)
-        self.fc2 = nn.Linear(64, 64)
+        self.fc1 = nn.Linear(state_size, 32)
+        self.fc2 = nn.Linear(32, 64)
         self.fc3 = nn.Linear(64, action_size)
 
     def forward(self, x):
