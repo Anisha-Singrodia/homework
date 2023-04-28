@@ -39,7 +39,7 @@ class Agent:
     ):
         # Define the hyperparameters
         self.epsilon = 1  # Exploration rate
-        self.epsilon_decay = 0.999  # Decay rate of exploration rate
+        self.epsilon_decay = 0.995  # Decay rate of exploration rate
         self.epsilon_min = 0.05  # Minimum exploration rate
         [60414, 53049, 294776, 68983, 129605, 115574, 62304, 75892, 55894]
         # self.epsilon_min = 0.05  # Minimum exploration rate
