@@ -1,11 +1,4 @@
 import gymnasium as gym
-import random
-
-import numpy as np
-from collections import deque
-
-import torch.nn as nn
-import torch
 import torch.optim as optim
 
 # import gym
@@ -13,7 +6,6 @@ import random
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.optim as optim
 
 import numpy as np
 from collections import deque, namedtuple
