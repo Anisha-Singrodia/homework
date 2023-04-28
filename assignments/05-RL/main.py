@@ -41,11 +41,11 @@ for i in range(1):
             n = min(30, len(last_n_rewards))
             avg = sum(last_n_rewards[-n:]) / n
             improvement_emoji = "🔥" if (total_reward > avg) else "😢"
-            print(
-                f"{improvement_emoji} Finished with reward {int(total_reward)}.\tAverage of last {n}: {int(avg)}"
-            )
+            # print(
+            #     f"{improvement_emoji} Finished with reward {int(total_reward)}.\tAverage of last {n}: {int(avg)}"
+            # )
             if avg > 0:
-                print("🎉 Nice work! You're ready to submit the leaderboard! 🎉")
+                # print("🎉 Nice work! You're ready to submit the leaderboard! 🎉")
                 steps.append(epi)
                 # break
             total_reward = 0
@@ -61,4 +61,3 @@ for i in range(1):
 # plt.ylabel("Score")
 # plt.show()
 # exit()
-# print(steps)
