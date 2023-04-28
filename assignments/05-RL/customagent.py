@@ -20,12 +20,21 @@ from collections import deque, namedtuple
 
 
 device = "cpu"
-BUFFER_SIZE = int(1e5)  # replay buffer size
+# BUFFER_SIZE = int(1e5)  # replay buffer size
+BUFFER_SIZE = 5000
 BATCH_SIZE = 64  # minibatch size
 GAMMA = 0.99  # discount factor
 TAU = 1e-3  # for soft update of target parameters
-LR = 1e-4  # learning rate
+LR = 3e-4  # learning rate
+# [226932, 63751, 134, 75381, 59013, 46209, 295641, 457141, 168622]
+# [171192, 219784, 124087, 114731, 160432, 47441, 293429, 309208]
 UPDATE_EVERY = 4  # how often to update the network
+# 283642
+# 217976
+# 74921
+# 65091 with 5000 buffer
+# 44742 with 5000 buffer
+# 45653
 
 
 class Agent:
@@ -34,12 +43,13 @@ class Agent:
     """
 
     def __init__(
-        self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box
+        self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box, LR
     ):
         # Define the hyperparameters
         self.epsilon = 1  # Exploration rate
         self.epsilon_decay = 0.999  # Decay rate of exploration rate
         self.epsilon_min = 0.01  # Minimum exploration rate
+        # self.epsilon_min = 0.05  # Minimum exploration rate
 
         self.action_space = action_space
         self.observation_space = observation_space
@@ -52,7 +62,7 @@ class Agent:
         # Q-Network
         self.qnetwork_local = QNetwork(8, 4, seed).to(device="cpu")
         self.qnetwork_target = QNetwork(8, 4, seed).to(device="cpu")
-        self.optimizer = optim.Adam(self.qnetwork_local.parameters())
+        self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=LR)
 
         # Replay memory
         self.memory = ReplayBuffer(BUFFER_SIZE, BATCH_SIZE, seed)
@@ -128,6 +138,7 @@ class Agent:
 
         # Calculate loss
         loss = F.mse_loss(Q_expected, Q_target)
+        # loss = F.smooth_l1_loss(Q_expected, Q_target)
         self.optimizer.zero_grad()
         # backward pass
         loss.backward()
