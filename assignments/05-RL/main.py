@@ -48,7 +48,7 @@ for i in range(1):
             )
             if avg > 0:
                 print("🎉 Nice work! You're ready to submit the leaderboard! 🎉")
-                print(epi)
+                # print(epi)
                 steps.append(epi)
                 break
             total_reward = 0
@@ -62,4 +62,4 @@ for i in range(1):
 # plt.ylabel("Score")
 # plt.show()
 # exit()
-print(steps)
+# print(steps)
