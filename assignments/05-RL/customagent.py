@@ -14,10 +14,10 @@ from collections import deque, namedtuple
 device = "cpu"
 # BUFFER_SIZE = int(1e5)  # replay buffer size
 BUFFER_SIZE = 5000
-# BATCH_SIZE = 64  # minibatch size
+BATCH_SIZE = 64  # minibatch size
 GAMMA = 0.99  # discount factor
 TAU = 1e-3  # for soft update of target parameters
-LR = 5e-4  # learning rate
+LR = 3e-4  # learning rate
 # [226932, 63751, 134, 75381, 59013, 46209, 295641, 457141, 168622]
 # [171192, 219784, 124087, 114731, 160432, 47441, 293429, 309208]
 UPDATE_EVERY = 4  # how often to update the network
@@ -35,10 +35,7 @@ class Agent:
     """
 
     def __init__(
-        self,
-        action_space: gym.spaces.Discrete,
-        observation_space: gym.spaces.Box,
-        batch,
+        self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box
     ):
         # Define the hyperparameters
         self.epsilon = 1  # Exploration rate
@@ -60,8 +57,6 @@ class Agent:
         self.optimizer = optim.Adam(self.qnetwork_local.parameters(), lr=LR)
 
         # Replay memory
-        BATCH_SIZE = 32
-        self.batch_size = 32
         self.memory = ReplayBuffer(BUFFER_SIZE, BATCH_SIZE, seed)
         # Initialize time step (for updating every UPDATE_EVERY steps)
         self.timestep = 0
@@ -108,14 +103,13 @@ class Agent:
         self.memory.add(state, action, reward, next_state, done)
         self.timestep += 1
         if self.timestep % UPDATE_EVERY == 0:
-            if len(self.memory) > self.batch_size:
+            if len(self.memory) > BATCH_SIZE:
                 sampled_experiences = self.memory.sample()
                 self.learn_after_step(sampled_experiences)
 
     def learn_after_step(self, experiences):
         """
         Learn from experience by training the q_network
-
         Parameters
         ----------
         experiences (array_like): List of experiences sampled from agent's memory
@@ -148,7 +142,6 @@ class Agent:
     def update_fixed_network(self, q_network, fixed_network):
         """
         Update fixed network by copying weights from Q network using TAU param
-
         Parameters
         ----------
         q_network (PyTorch model): Q network
@@ -166,7 +159,6 @@ class QNetwork(nn.Module):
     def __init__(self, state_size, action_size, seed):
         """
         Build a fully connected neural network
-
         Parameters
         ----------
         state_size (int): State dimension
@@ -192,7 +184,6 @@ class ReplayBuffer:
     def __init__(self, buffer_size, batch_size, seed):
         """
         Replay memory allow agent to record experiences and learn from them
-
         Parametes
         ---------
         buffer_size (int): maximum size of internal memory
