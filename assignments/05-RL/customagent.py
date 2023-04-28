@@ -35,7 +35,7 @@ class Agent:
     """
 
     def __init__(
-        self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box, LR
+        self, action_space: gym.spaces.Discrete, observation_space: gym.spaces.Box
     ):
         # Define the hyperparameters
         self.epsilon = 1  # Exploration rate

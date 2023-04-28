@@ -5,7 +5,6 @@
 
 import gymnasium as gym
 from customagent import Agent
-import matplotlib.pyplot as plt
 
 # %matplotlib inline
 
@@ -13,14 +12,14 @@ SHOW_ANIMATIONS = True
 lrs = [1e-4, 2e-4, 3e-4, 4e-4, 5e-4, 6e-4, 7e-4, 8e-4, 9e-4, 10e-4]
 # lrs = [3e-4]
 steps = []
-for i in range(10):
-    LR = lrs[i]
+for i in range(1):
+    # LR = lrs[0]
     # env = gym.make("LunarLander-v2", render_mode="human" if SHOW_ANIMATIONS else "none")
     env = gym.make("LunarLander-v2")
     observation, info = env.reset(seed=42)
 
     agent = Agent(
-        action_space=env.action_space, observation_space=env.observation_space, LR=LR
+        action_space=env.action_space, observation_space=env.observation_space
     )
 
     total_reward = 0
