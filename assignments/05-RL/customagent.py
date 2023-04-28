@@ -17,7 +17,7 @@ BUFFER_SIZE = 5000
 BATCH_SIZE = 64  # minibatch size
 GAMMA = 0.99  # discount factor
 TAU = 1e-3  # for soft update of target parameters
-LR = 5e-4  # learning rate
+LR = 10e-4  # learning rate
 # [226932, 63751, 134, 75381, 59013, 46209, 295641, 457141, 168622]
 # [171192, 219784, 124087, 114731, 160432, 47441, 293429, 309208]
 UPDATE_EVERY = 4  # how often to update the network
